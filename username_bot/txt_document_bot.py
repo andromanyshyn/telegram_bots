@@ -14,7 +14,7 @@ db = Dispatcher(bot=bot)
 async def get_message_start(message: types.Message):
     await message.reply("Hello! Welcome to my bot!")
     await bot.send_message(
-        message.chat.id, "Виберіть команду save для того щоб зберегти імена"
+        message.chat.id, "Select the save command to save the names"
     )
 
 
