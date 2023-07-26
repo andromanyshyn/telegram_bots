@@ -1,8 +1,10 @@
-from sqlalchemy import create_engine, Column, Integer, DateTime, LargeBinary
-from keys.keys import DB_USER, DB_PASSWORD, DB_NAME
+import datetime
+
+from sqlalchemy import Column, DateTime, Integer, LargeBinary, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-import datetime
+
+from keys.keys import DB_NAME, DB_PASSWORD, DB_USER
 
 engine = create_engine(
     f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@localhost/{DB_NAME}", echo=True
@@ -12,7 +14,7 @@ Base = declarative_base()
 
 
 class Image(Base):
-    __tablename__ = 'images'
+    __tablename__ = "images"
 
     id = Column(Integer, primary_key=True)
     date_created = Column(DateTime, default=datetime.datetime.utcnow)
@@ -21,13 +23,4 @@ class Image(Base):
 
 Base.metadata.create_all(bind=engine)
 
-Session = sessionmaker(bind=engine)
-session = Session()
-
-with open(r'C:\Users\Andrew\TelegramBots\file_bot\images\2023-07-23.png', 'rb') as file:
-    img = file.read()
-
-image = Image(image=img)
-session.add(image)
-session.commit()
-session.close()
+Session = sessionmaker(bind=engine, autoflush=True)
