@@ -83,7 +83,7 @@ async def receive_image(message: types.Message):
             session.commit()
         await bot.send_message(message.chat.id, "Photo is saved successfully")
     except Exception as error:
-        logging.error(f"Помилка при збереженні фото: {error}")
+        logging.error(f"Error while saving photo: {error}")
         await bot.send_message(
             message.chat.id,
             "There was an error while saving the photo. Please try again later.",
